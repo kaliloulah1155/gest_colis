@@ -7,6 +7,7 @@
 {% block dark-mode-vars %}
   <link rel="stylesheet" href="{% static "admin/css/dark_mode.css" %}">
   <script src="{% static "admin/js/theme.js" %}" defer></script>
+  
 {% endblock %}
 {% if not is_popup and is_nav_sidebar_enabled %}
   <link rel="stylesheet" href="{% static "admin/css/nav_sidebar.css" %}">
@@ -35,6 +36,7 @@
     <div id="header">
         <div id="branding">
         {% block branding %}{% endblock %}
+        Gestion des colis V1.0.0
         </div>
         {% block usertools %}
         {% if has_permission %}
