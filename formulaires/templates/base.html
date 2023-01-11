@@ -1,0 +1,57 @@
+{% load static %}
+ 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <link rel="shortcut icon" href="{% static 'images/sidi.jpg' %}">
+    <title>SIDI-EXPRESS | CÔTE D'IVOIRE</title>
+
+    <!-- style css -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-icons/bootstrap-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'boxicons/css/boxicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'custom_asset/css/custom_style.css' %}">
+
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css"/>
+
+</head>
+<body>
+      <!-- NavBar -->
+    {% include "layouts/navbar.html" %}
+
+      <div id="home"></div>
+
+    <!-- Content -->
+    {% block content %}
+  
+    {% endblock content %}
+    
+    <!-- footer -->
+    {% include "layouts/footer.html" %}
+
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Sidi-Express</span></strong>. All Rights Reserved 2023
+      </div>
+      <div class="credits">
+        Designed by <a href="#">FUTURTECH</a>
+      </div>
+    </div>
+  </footer>
+
+
+
+
+    <!-- == sources javascriot -->
+    
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    
+</body>
+</html>

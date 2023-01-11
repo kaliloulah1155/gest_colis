@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+      <!-- Section hero -->
+      <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="{% static 'images/hero-carousel.jpg'%}" class="d-block w-100" alt="...">
+              <div class="carousel-caption">
+                <span class="badge rounded-pill bg-success">Côte d'ivoire</span>
+                <h5>SIDI EXPRESS</h5>
+                <p>GESTION ET LIVRAISON DE COURRIERS ET DE COLIS POUR LES COMPAGNIE DE TRANSPORTS IVOIRIENNES</p>
+                <p><a type="submit" href="/colis/" class="btn btn-success mt-3">Suivre mon colis</a></p>
+              </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Section about -->
+ 
+
+    <!-- Section services -->
+
+   
+
+    <!-- Colis -->
+
+   
+    <!-- newletter -->
+
+    <section id="subscribe">
+      <div class="container" data-aos="zoom-in">
+        <div class="section-header">
+          <h2>Newsletter</h2>
+          <p>Rerum numquam illum recusandae quia mollitia consequatur.</p>
+          <form action="forms/newletter.php" method="post" role="form" class="php-email-form">
+          <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-10 d-block text-center mt-4">
+              <input type="text" class="form-control" placeholder="Veuillez entrez votre email">
+              <a type="submit" name="newletter" href="forms/newsletter.php" class="btn btn-success mt-3">Envoyer</a>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- partenaire -->
+    
+    <section id="partenaire" class="team section-padding">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="section-header text-center pb-5">
+              <h2>Notre Partenaire</h2>
+              <p>Ils nous aiment et ils nous font confiance.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="card text-center">
+              <div class="card-body">
+                <img src="{% static 'images/Partenaire1.png' %}" alt="" class="img-fluid">
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="card text-center">
+              <div class="card-body">
+                <img src="{% static 'images/Partenaire2.png' %}" alt="" class="img-fluid">
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="card text-center">
+              <div class="card-body">
+                <img src="{% static 'images/Partenaire3.jpeg' %}" alt="" class="img-fluid">
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-3">
+            <div class="card text-center">
+              <div class="card-body">
+                <img src="{% static 'images/Partenaire4.png' %}" alt="" class="img-fluid">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- Contact -->
+
+<p>
+<section>
+    <div class="container border shadow rounded fond p-5 bg-primary">
+      <div class="row">
+        <div class="col-md-6">
+          <img src="{% static 'images/sending.jpg' %}" width="100%">
+        </div>
+        <div class="col-md-6 logistique">
+          <h4 class="introlog">LOGISTIQUE <br> A L'IMPORT-EXPORT</h4>
+          <p class="text-white text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua.</p>
+          <div class="text-center">
+            <p><a type="submit" href="/colis/" class="btn btn-success mt-3">Suivre mon colis</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</p>
+
+  <!-- newletter -->
+
+  <section id="subscribe">
+    <div class="container" data-aos="zoom-in">
+      <div class="section-header">
+        <h2>Newsletter</h2>
+        <p>Rerum numquam illum recusandae quia mollitia consequatur.</p>
+        <form action="forms/newletter.php" method="post" role="form" class="php-email-form">
+        <div class="row justify-content-center">
+          <div class="col-lg-6 col-md-10 d-block text-center mt-4">
+            <input type="text" class="form-control" placeholder="Veuillez entrez votre email">
+            <a type="submit" name="newletter" href="forms/newsletter.php" class="btn btn-success mt-3">Envoyer</a>
+          </div>
+        </div>
+      </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- partenaire -->
+  
+  <section id="partenaire" class="team section-padding">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-header text-center pb-5">
+            <h2>Notre Partenaire</h2>
+            <p>Ils nous aiment et ils nous font confiance.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card text-center">
+            <div class="card-body">
+              <img src="{% static 'images/Partenaire1.png' %}" alt="" class="img-fluid">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card text-center">
+            <div class="card-body">
+              <img src="{% static 'images/Partenaire2.png' %}" alt="" class="img-fluid">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card text-center">
+            <div class="card-body">
+              <img src="{% static 'images/Partenaire3.jpeg' %}" alt="" class="img-fluid">
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card text-center">
+            <div class="card-body">
+              <img src="{% static 'images/Partenaire4.png' %}" alt="" class="img-fluid">
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- Contact -->
+
+  
+{% endblock content %}

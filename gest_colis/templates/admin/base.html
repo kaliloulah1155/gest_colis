@@ -36,8 +36,14 @@
     <div id="header">
         <div id="branding">
         {% block branding %}{% endblock %}
-        Gestion des colis V1.0.0
+        Gestion des colis V1.0.0 
+        {% if user.is_authenticated %}
+          {% if not user.is_superuser %}
+              - Profil : {% for group in  user.groups.all %}&nbsp;<span>{{ group.name }} {% if user.compagnie %}({{ user.compagnie.sigle}}) {% endif %}  </span>{% endfor %}
+          {% endif %}
+        {% endif %}
         </div>
+       
         {% block usertools %}
         {% if has_permission %}
         <div id="user-tools">

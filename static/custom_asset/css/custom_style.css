@@ -1,0 +1,14 @@
+#navbarSupportedContent .active{
+    background-color: blue;
+}
+
+
+.table thead th,
+.table thead td, 
+.table tbody td,
+.table tfoot td {
+   padding-left: 0rem;
+   padding-top: 0rem;
+   padding-bottom: 0rem;
+   padding-right: 0rem;
+}

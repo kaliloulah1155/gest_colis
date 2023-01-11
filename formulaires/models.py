@@ -13,6 +13,17 @@ STATUS_CHOICES=(
     ('de','Desactivé')
 )
 
+# POUR LA CATEGORIES /SLUG
+STATUS_CHOICES_SLUG=(
+    ('produit','Produit'),
+    ('WGT','Poids'),
+    ('MP','Moyen de paiement'),
+    ('TCL','Type de colis'),
+    ('SV','Service'),
+    ('DS','Etat livraison'),
+    ('SM','Délai de livraison'),
+)
+
 class Compagnies(models.Model):
     libelle = models.CharField(max_length=200,verbose_name="Libellé",blank=False,null=False)
     sigle = models.CharField(max_length=50,verbose_name="Sigle",blank=False,null=False)
@@ -91,11 +102,12 @@ class Communes(models.Model):
 class Categories(models.Model):
     libelle = models.CharField(max_length=200,verbose_name="Libellé",blank=False,null=False)
     valeur = models.IntegerField(verbose_name="Valeur",null=True)
-    slug = models.SlugField(max_length=50,verbose_name="Slug",blank=False,null=False)
+    slug = models.SlugField(max_length=50,verbose_name="Slug",blank=False,null=False,choices=STATUS_CHOICES_SLUG)
     position = models.IntegerField(verbose_name="Position",null=True)
     status=models.BooleanField(default=True,verbose_name="Est Active")
     created_at = models.DateTimeField(default=timezone.now(),verbose_name="Date de création")
     updated_at = models.DateTimeField(default=timezone.now(),verbose_name="Date de mise à jour")
+    
     class Meta:
         verbose_name_plural="Categories"
         verbose_name = "Categorie"
@@ -108,7 +120,7 @@ def generate_num_colis():
     code =str(uuid.uuid4())[:10].replace('-','').lower()
     return code
     
-class Colis(models.Model):
+class Colis(models.Model):   
     num_colis = models.CharField(max_length=100,verbose_name="N° Colis",null=True)
     poids = models.IntegerField(verbose_name="Poids",null=True)
     receveur = models.CharField(max_length=200,verbose_name="Receveur",blank=False,null=False)
@@ -143,12 +155,56 @@ class Colis(models.Model):
         if(self.date_arrive > self.date_depart):
             raise ValidationError("Attentation la date d'arrivée est supérieure à la date de départ")
     
-    def save(self, *args, **kwargs):
+    ''' def save(self, *args, **kwargs):
         self.num_colis = generate_num_colis()
+        super(Colis, self).save(*args, **kwargs) '''
+    def save(self, *args, **kwargs):
+        if self.etape ==0:
+            self.num_colis = generate_num_colis()
         super(Colis, self).save(*args, **kwargs)
+    
         
     class Meta:
         verbose_name_plural="Colis"
         verbose_name = "Colis"
     def __str__(self):
         return f"Colis N° {self.num_colis}"
+    
+    
+#LIVRAISONS
+class Livraisons(models.Model):
+    date_estimation = models.DateField(blank=True, null=True,verbose_name="Date de livraison")
+    montant = models.IntegerField(verbose_name="Montant",blank=True,null=True,default=0)
+    livreur=models.ForeignKey(CustomUser,verbose_name='Livreur',blank=True,null=True,on_delete=models.CASCADE,)
+    moyen_paiement=models.ForeignKey(Categories,verbose_name='Moyen de paiement',blank=True,null=True,on_delete=models.CASCADE,limit_choices_to={'status': True},)
+    poids=models.ForeignKey(Categories,verbose_name='Poids',blank=True,null=True,on_delete=models.CASCADE,limit_choices_to={'status': True},related_name='poids')
+    delai=models.ForeignKey(Categories,verbose_name='Délai',blank=True,null=True,on_delete=models.CASCADE,limit_choices_to={'status': True},related_name='delai')
+    status_livraison=models.ForeignKey(Categories,verbose_name='Statut de la livraison',blank=True,null=True,on_delete=models.CASCADE,limit_choices_to={'status': True},related_name='statut_livr')
+    service=models.ForeignKey(Categories,verbose_name='Service',blank=True,null=True,on_delete=models.CASCADE,limit_choices_to={'status': True},related_name='service')
+    colis=models.ForeignKey(Colis,verbose_name='Colis',blank=True,null=True,on_delete=models.CASCADE,limit_choices_to={'status': True},related_name='colis')
+    status=models.BooleanField(default=True,verbose_name="Est Active")
+    created_at = models.DateTimeField(default=timezone.now(),verbose_name="Date de création")
+    updated_at = models.DateTimeField(default=timezone.now(),verbose_name="Date de mise à jour")
+    class Meta:
+        verbose_name_plural="Livraisons"
+        verbose_name = "Livraison"
+    def __str__(self):
+        return f"Livreur : {self.livreur}"
+    
+#COMPOSANTS / PRODUITS
+class Composants(models.Model):
+    produit=models.ForeignKey(Categories,verbose_name='Libellé',blank=True,null=True,on_delete=models.CASCADE,limit_choices_to={'status': True},related_name='produit')
+    pu = models.IntegerField(verbose_name="Prix unitaire",blank=True,null=True,default=0)
+    qte = models.IntegerField(verbose_name="Quantité",blank=True,null=True,default=0)
+    montant = models.IntegerField(verbose_name="Montant",blank=True,null=True,default=0)
+    colis=models.ForeignKey(Colis,verbose_name='Colis',blank=True,null=True,on_delete=models.CASCADE,limit_choices_to={'status': True},related_name='colis_comp')
+    status=models.BooleanField(default=True,verbose_name="Est Active")
+    created_at = models.DateTimeField(default=timezone.now(),verbose_name="Date de création")
+    updated_at = models.DateTimeField(default=timezone.now(),verbose_name="Date de mise à jour")
+    
+    class Meta:
+        verbose_name_plural="Produits"
+        verbose_name = "Produit"
+    def __str__(self):
+        return f"Produit : {self.produit.libelle}"
+

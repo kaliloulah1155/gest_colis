@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 #from .jazzmin import JAZZMIN_SETTINGS
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,12 +29,14 @@ SECRET_KEY = 'django-insecure-e^*uk^d-m&0-0aa+xwc3q-4zhbf^i##3@^-16r$qlx34t#z#7m
 DEBUG = True
 
 ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = ['*']  #pas securiser mais pour le dev
 
 
 # Application definition
 
 INSTALLED_APPS = [
     #'jazzmin',
+    #'active_link',
     'formulaires.apps.FormulairesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'pycrystal'
 ]
 
 AUTH_USER_MODEL='formulaires.CustomUser'
@@ -145,3 +149,12 @@ STATICFILES_DIRS = [
 
 #JAZZMIN SETTING
 #JAZZMIN_SETTINGS=JAZZMIN_SETTINGS
+
+
+#MAIL SENDER CONFIGURATION
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST="smtp.gmail.com"
+EMAIL_PORT=587
+EMAIL_HOST_USER="ibsonpremier@gmail.com"
+EMAIL_HOST_PASSWORD="gvydmtuspvqtwlee"
+EMAIL_USE_TLS=True

@@ -1,0 +1,92 @@
+<form id="search-form" method="get" >
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Recherche</button>
+</form>
+
+<table id="search-results">
+     <tr>
+         <td bgcolor="yellow">
+            N° Colis : 
+         </td>
+         <td class="t_num_colis">
+           &nbsp; NEANT
+         </td>
+     </tr>
+     <tr><td></td></tr>
+     <tr>
+        <td bgcolor="yellow">
+           Receveur : 
+        </td>
+        <td class="t_receveur">
+          &nbsp; NEANT
+        </td>
+    </tr>
+    <tr><td></td></tr>
+    <tr><td></td></tr>
+     <tr>
+        <td bgcolor="yellow">
+          Adresse du receveur : 
+        </td>
+        <td class="t_adr_receveur">
+          &nbsp; NEANT
+        </td>
+    </tr>
+    <tr><td></td></tr>
+     <tr>
+        <td bgcolor="yellow">
+           Compagnie : 
+        </td>
+        <td class="t_compagnie">
+          &nbsp; NEANT
+        </td>
+    </tr>
+    <tr><td></td></tr>
+     <tr>
+        <td bgcolor="yellow">
+           Photo : 
+        </td>
+    </tr>
+    <tr><td></td></tr>
+     <tr>
+        <td>
+        </td>
+        <td class="t_photo">
+          &nbsp; NEANT
+        </td>
+    </tr>
+    
+</table>
+
+<form method='post' action="{% url 'mail_sender' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Send mail</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.2.min.js" integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA=" crossorigin="anonymous"></script>
+<script>
+   
+    $('#search-form').submit(function(event) {
+        event.preventDefault();
+        var search = $('input[name="query"]').val();
+        $.ajax({
+            url: "search/"+search,
+            type:'GET',
+            success: function(data) {
+                // Traitez les données ici et affichez-les dans un tableau
+
+                 if(data.results.length !=0){
+                   
+                    $('.t_num_colis').text(data.results[0].num_colis); 
+                    $('.t_receveur').text(data.results[0].receveur);
+                    $('.t_compagnie').text(data.results[0].compagnie_libelle);
+                    $('.t_adr_receveur').text(data.results[0].adr_receveur);
+                    $('.t_photo').html('<img src="'+data.results[0].photo+'" alt="image" width="150rem;" height="150rem" >');
+                } 
+                 
+               console.log(data.results[0]);
+            }
+        });
+    });
+
+</script>

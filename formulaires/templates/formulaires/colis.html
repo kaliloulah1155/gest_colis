@@ -1,0 +1,544 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'images/hero-carousel1.jpg' %}" class="d-block w-100" alt="...">
+          <div class="carousel-caption">
+            <!-- formulaire de suivie -->
+            <div class="container d-flex justify-content-center">
+              <div class="col-md-6 bg rounded">
+                <div class="bd-example">
+                  <div class="groubtn d-flex">
+                    <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                      <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Suivie de colis</a>
+                      <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false" tabindex="-1">Liste des colis</a>
+                    </div>
+                  </div>
+                  <div class="tab-content" id="nav-tabContent">
+                    <!-- suivie de colis -->
+                    <div class="tab-pane fade mb-3 show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                      <div class="justify-content-center">
+                       <form class="w-75 mx-auto">
+                        {% csrf_token %}
+                          <div class="col-md-12 my-4">
+                              <h4>RECHERCHE</h4>
+                              <p>Suivez l'états de vos colis jusqu'à destination</p>
+                          </div>
+                          
+                          <div class="col-md-12">
+                              <input type="text" class="form-control" name="query" placeholder="Numero de colis*" required="">
+                          </div>
+                          <div class="col-12">
+                              <a href="javascript:void(0)" class="btn btn-success mt-3 btn_search_simple" >RECHERCHER</a>
+                          </div>      
+                      </form>
+                      </div>
+                    </div>
+                    <!-- liste de colis -->
+                    <div class="tab-pane fade mb-3" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                       <div class="justify-content-center">
+          
+                       <form  class="w-75 mx-auto">
+                        {% csrf_token %}
+                        <p>Entrez l'information</p>
+                        <p>↓</p>
+                          
+                          <div class="col-md-12">
+                              <input type="number" class="form-control get_tel" name="phone" placeholder="Numero de téléphone*" required="">
+                          </div>
+                          <div class="col-12">
+                              <a href="javascript:void(0)" class="btn btn-success mt-3 btn_list_p" >RECHERCHER</a>
+                          </div>      
+                      </form>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+
+
+    <!-- ========= DEBUT Content Modal =========== -->
+    <div class="modal fade" id="modal_search" tabindex="-1" aria-labelledby="search_ModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+         
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenteredScrollableTitle">INFORMATION DU COLIS</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+             <div class="contenu1"></div>
+             <div class="contenu2">
+               
+                <table>
+
+                  <tr>
+                      <td bgcolor="lightgreen">
+                        N° Colis : 
+                      </td>
+                      <td class="t_num_colis px-2">
+                        &nbsp; NEANT
+                      </td>
+                    </tr>
+                    <tr><td></td></tr>
+                    <tr>
+                       <td bgcolor="lightgreen">
+                          Poids réel (kg) : 
+                       </td>
+                       <td class="t_poids_rel px-2">
+                         &nbsp; NEANT
+                       </td>
+                   </tr>
+                    <tr><td></td></tr>
+                    <tr>
+                       <td bgcolor="lightgreen">
+                          Receveur : 
+                       </td>
+                       <td class="t_receveur px-2">
+                         &nbsp; NEANT
+                       </td>
+                   </tr>
+                   <tr><td></td></tr>
+                   <tr><td></td></tr>
+                    <tr>
+                       <td bgcolor="lightgreen">
+                         Adresse du receveur : 
+                       </td>
+                       <td class="t_adr_receveur px-2">
+                         &nbsp; NEANT
+                       </td>
+                   </tr>
+                   <tr><td></td></tr>
+                   <tr>
+                      <td bgcolor="lightgreen">
+                        Pays du receveur : 
+                      </td>
+                      <td class="t_pays_receveur px-2">
+                        &nbsp; NEANT
+                      </td>
+                  </tr>
+                   <tr><td></td></tr>
+                    <tr>
+                       <td bgcolor="lightgreen">
+                         T&eacute;l&eacute;phone du receveur : 
+                       </td>
+                       <td class="t_tel_receveur px-2">
+                         &nbsp; NEANT
+                       </td>
+                   </tr>
+                   <tr><td></td></tr>
+                    <tr>
+                       <td bgcolor="lightgreen">
+                          Compagnie : 
+                       </td>
+                       <td class="t_compagnie px-2">
+                         &nbsp; NEANT
+                       </td>
+                   </tr>
+                   <tr><td></td></tr>
+                   <tr>
+                      <td bgcolor="lightgreen">
+                         Poids(kg) : 
+                      </td>
+                      <td class="t_poids px-2">
+                        &nbsp; NEANT
+                      </td>
+                  </tr>
+                  <tr><td></td></tr>
+                   <tr>
+                      <td bgcolor="lightgreen">
+                         Moyens de paiement : 
+                      </td>
+                      <td class="t_moypaie px-2">
+                        &nbsp; NEANT
+                      </td>
+                  </tr>
+                  <tr><td></td></tr>
+                   <tr>
+                      <td bgcolor="lightgreen">
+                        Statuts de la livraison : 
+                      </td>
+                      <td class="t_st_liv px-2">
+                        &nbsp; NEANT
+                      </td>
+                  </tr>
+                  <tr><td></td></tr>
+                   <tr>
+                      <td bgcolor="lightgreen">
+                        Montant : 
+                      </td>
+                      <td class="t_mtn px-2">
+                        &nbsp; 0 F CFA
+                      </td>
+                  </tr>
+                   <tr><td></td></tr>
+                    <tr>
+                       <td bgcolor="lightgreen">
+                          Image : 
+                       </td>
+                   </tr>
+                   <tr><td></td></tr>
+                    <tr>
+                       <td>
+                       </td>
+                       <td class="t_photo px-2">
+                         &nbsp; NEANT
+                       </td>
+                   </tr>
+
+                </table>
+
+             </div>
+              
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-primary btn_search_list">Aller sur ma liste</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+     <!-- ========= END Content Modal =========== -->
+
+<!-- DEBUT pour liste des colis -->
+<div class="modal fade" id="modal_list" tabindex="-1" aria-labelledby="exampleModalFullscreenLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title h4" id="exampleModalFullscreenLabel">LISTE DES COLIS</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <h5>Contenue de colis </h5>
+        <div class="contenu3"></div>
+            <div class="contenu4">
+              <table class="table table-sm table-bordered bg-light text-dark tableL">
+                <thead>
+                <tr>
+                  <th scope="col" style="white-space:nowrap">Numéro colis</th>
+                  <th class="text-center" style="white-space:nowrap" scope="col">Receveur</th>
+                  <th class="text-center" style="white-space:nowrap" scope="col">Date arrivée</th>
+                  <th class="text-center" style="white-space:nowrap" scope="col">Date depart</th>
+                  <th class="text-center" style="white-space:nowrap" scope="col">Compagnie</th>
+                  <th class="text-center" style="white-space:nowrap" scope="col">Pays</th>
+                  <th class="text-center" style="white-space:nowrap" scope="col">Quartier</th>
+                  <th class="text-center" style="white-space:nowrap" scope="col">Etat</th>
+                  <th class="text-center" style="white-space:nowrap" scope="col">Détails</th>
+                </tr>
+                </thead>
+                <tbody>
+                
+                </tbody>
+              </table>
+          </div>
+      </div>
+      <div class="modal-footer">
+        
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- FIN pour liste des colis -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script language='javascript' src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script language='javascript' src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+<script language='javascript' src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
+<script>
+  function formatMoneyJs(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
+    $(document).on('click','.btn_list',function(e){
+      e.preventDefault();
+        $('#modal_list').modal('hide');
+        $('#modal_search').modal('show'); 
+    });
+
+     //BUTTON DE RECHERCHE SIMPLE LISTE phone
+     $('.contenu3').hide();
+     $('.contenu4').hide();
+    $(document).on('click','.btn_search_list, .btn_list_p',function(e){
+      e.preventDefault();
+    
+      var phone = $('input[name="phone"]').val();
+
+      if(phone !=''){
+
+        $.ajax({
+          url: "../search_list/"+phone,
+          type:'GET',
+          success: function(data) {
+           
+            
+            var t = $('.tableL').DataTable();
+            t.clear();
+          
+           if (data.length != 0) {
+              
+                $('.contenu4').show();
+                $('.contenu3').hide(); 
+                var livrable='NEANT';
+
+                 data.map(data=>{
+
+                  detail_link="javascript:void(0);" ; 
+                  btn_detail_link="onclick='data_of_search(\""+data.num_colis+"\")' "; 
+                      console.log(data.livraisons)
+                      if (data.livraisons.length !=0)  livrable=data.livraisons[0].status_livraison;
+                  t.row.add(
+                    [
+                        "<span style='color: #203A79CC;white-space:nowrap'>"+data.num_colis+"</span>",
+                        "<span style='color: #203A79CC;white-space:nowrap'>"+data.receveur+"</span>",
+                        "<span style='color: #203A79CC;white-space:nowrap'>"+data.date_arrive+"</span>",
+                        "<span style='color: #203A79CC;white-space:nowrap'>"+data.date_depart+"</span>",
+                        "<span style='color: #203A79CC;white-space:nowrap' >"+data.compagnie+"</span>",
+                        "<span style='color: #203A79CC;white-space:nowrap'>"+data.pays+"</span>",
+                        "<span style='color: #203A79CC;white-space:nowrap'>"+data.quartier+"</span>",
+                        "<span style='color: #203A79CC;white-space:nowrap'>"+livrable+"</span>",
+                        "<div style='display: flex;' class='justify-content-center'>"+
+                            "<a href='"+detail_link+"' "+btn_detail_link+" class='btn btn-success'    >"+
+                                "Voir"+
+                            "</a>"+
+                        "</div>"
+                       ]
+                    );
+                     
+                     t.draw(); 
+                 });
+
+                 $('#modal_list').modal('show');
+                 $('#modal_search').modal('hide');
+  
+            }else{
+                $('.contenu3').show();
+                $('.contenu4').hide();
+                $('.get_tel').val("");
+                $('.contenu3').text("Vous n'avez pas de colis").css({
+                'font-size' : '1rem',
+                'color' : 'red',
+                'text-align' : 'center'
+                });
+                $('#modal_search').modal('hide'); 
+                $('#modal_list').modal('show');
+             }
+  
+          },
+          error:function(jqXHR,error, errorThrown) {  
+            if(jqXHR.status&&jqXHR.status==400){
+             
+                 var data = $.parseJSON(jqXHR.responseText);
+                 $('.contenu3').show();
+                 $('.contenu4').hide();
+                 $('.get_tel').val("");
+                 $('.contenu3').text(data.error).css({
+                  'font-size' : '1rem',
+                  'color' : 'red',
+                  'text-align' : 'center'
+               });
+               $('#modal_search').modal('hide'); 
+               $('#modal_list').modal('show');
+                
+            }else{
+                $('.contenu3').show();
+                $('.contenu4').hide();
+                $('.get_tel').val("");
+                $('.contenu3').text("Something went wrong").css({
+                 'font-size' : '1rem',
+                 'color' : 'red',
+                 'text-align' : 'center'
+                });
+                $('#modal_search').modal('hide'); 
+                $('#modal_list').modal('show');
+            }
+          }
+      });
+
+
+      }else{
+      
+            $('.contenu3').show();
+            $('.contenu4').hide();
+            $('input[name="phone"]').val("");
+            $('.contenu3').text('Veuillez remplir le formulaire').css({
+              'font-size' : '1rem',
+              'color' : 'red',
+              'text-align' : 'center'
+          });
+          $('#modal_search').modal('hide'); 
+          $('#modal_list').modal('show');
+        
+  
+      }
+         
+
+
+    }); $('.contenu3').hide();
+     $('.contenu4').hide();
+    $(document).on('click','.btn_search_list',function(e){
+      e.preventDefault();
+      
+     
+
+      var phone = $('input[name="phone"]').val();
+
+      if(phone !=''){
+
+
+      }else{
+      
+            $('.contenu3').show();
+            $('.contenu4').hide();
+            $('input[name="phone"]').val("");
+            $('.contenu3').text('Veuillez remplir le formulaire').css({
+              'font-size' : '1rem',
+              'color' : 'red',
+              'text-align' : 'center'
+          });
+          $('#modal_search').modal('hide'); 
+          $('#modal_list').modal('show');
+        
+  
+      }
+         
+
+
+    });
+
+    $(document).ready(function() {
+			$('.tableL').DataTable({
+ 				//:true,
+				//scrollX:true,
+				//scrollCollapse:true,
+				lengthMenu:[5,10,15,20,25,30,35,40,45,50],
+				order: [[0, 'desc']],
+				language: {//langue debut
+					"emptyTable": "Aucune donn\u00e9e disponible dans le tableau",
+					"zeroRecords":"AUCUNE DONN\u00c9E TROUV\u00c9E",
+					"paginate": {
+							"previous": "Pr\u00e9c\u00e9dent",
+            				"next":"Suivant"
+					},
+					"info": "Affichage de _START_ a _END_ sur _TOTAL_ \u00e9l\u00e9ments",
+        			"infoEmpty":  "Affichage de 0 a 0 sur 0 \u00e9l\u00e9ments",
+        			"infoFiltered":  "(filtres de _MAX_ \u00e9l\u00e9ments au total)",
+					"searchPlaceholder":"Recherche",
+					"search": "",
+					"sLengthMenu":"Affichage de _MENU_ \u00e9l\u00e9ments",
+				}//langue fin
+			});
+
+		});
+
+  $('.btn_search_list').hide();
+  $('.contenu1').hide();
+  $('.contenu2').hide();
+  $('.get_tel').val("");
+ //BUTTON DE RECHERCHE SIMPLE
+ $(document).on('click','.btn_search_simple',function(e){
+  e.preventDefault();
+  
+  var search = $('input[name="query"]').val();
+ 
+  if(search !=''){
+        
+       data_of_search(search);
+
+  }else{
+      $('.contenu1').show();
+      $('.contenu2').hide();
+      $('.get_tel').val("");
+      $('.contenu1').text('Veuillez remplir le formulaire').css({
+        'font-size' : '1rem',
+        'color' : 'red',
+        'text-align' : 'center'
+    });
+    $('#modal_list').modal('hide');
+    $('#modal_search').modal('show');
+      
+  }
+});
+    
+function data_of_search(requete){
+  $.ajax({
+    url: "../search/"+requete,
+    type:'GET',
+    success: function(data) {
+      //console.log(data.results.length);
+      if (data.results.length != 0) {
+          $('.contenu2').show();
+          $('.contenu1').hide(); 
+          $('.btn_search_list').show();
+          $('.get_tel').val(data.results[0].contact_receveur);
+          $('.t_num_colis').text(data.results[0].num_colis); 
+          $('.t_receveur').text(data.results[0].receveur); 
+          $('.t_tel_receveur').text(data.results[0].contact_receveur);
+          $('.t_compagnie').text(data.results[0].compagnie_libelle); 
+          $('.t_poids_rel').text(data.results[0].poids_rel);
+          $('.t_poids').text(data.results[1].poids); 
+          $('.t_moypaie').text(data.results[1].moyen_paiement); 
+          $('.t_st_liv').text(data.results[1].status_livraison);  
+          $('.t_mtn').text( formatMoneyJs(data.results[1].montant)+' F CFA');
+          $('.t_adr_receveur').text(data.results[0].adr_receveur);
+          $('.t_pays_receveur').text(data.results[0].pays);
+          $('.t_photo').html('<img src="'+data.results[0].photo+'" alt="image" width="150rem;" height="150rem" >');
+          $('#modal_list').modal('hide');
+          $('#modal_search').modal('show');
+
+      }  
+
+    },
+    error:function(jqXHR,error, errorThrown) {  
+      if(jqXHR.status&&jqXHR.status==400){
+       
+           var data = $.parseJSON(jqXHR.responseText);
+           $('.contenu1').show();
+           $('.contenu2').hide();
+           $('.get_tel').val("");
+           $('.contenu1').text(data.error).css({
+            'font-size' : '1rem',
+            'color' : 'red',
+            'text-align' : 'center'
+         });
+         $('#modal_list').modal('hide');
+         $('#modal_search').modal('show');
+          
+      }else{
+          $('.contenu1').show();
+          $('.contenu2').hide();
+          $('.get_tel').val("");
+          $('.contenu1').text("Something went wrong").css({
+           'font-size' : '1rem',
+           'color' : 'red',
+           'text-align' : 'center'
+          });
+          $('#modal_list').modal('hide');
+          $('#modal_search').modal('show');
+      }
+    }
+});
+}
+
+//DEBUT CHARGEMENT DE LA LISTE DES COLIS
+
+
+
+//FIN CHARGEMENT DE LA LISTE DES COLIS
+   
+
+    
+
+
+</script>
+
+{% endblock content %}
